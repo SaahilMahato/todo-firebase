@@ -6,12 +6,15 @@ class TaskView extends LitElement {
     static get properties() {
         return {
             id: { type: Number },
-            completed: { type: Boolean },
-            title: { type: String },
+
             time: { type: String },
+            title: { type: String },
+            
+            completed: { type: Boolean },
+
             editTodo: { type: Function },
-            updateTodos: { type: Function },
             deleteTodo: { type: Function },
+            updateTodos: { type: Function },
         }
     }
 
@@ -45,13 +48,14 @@ class TaskView extends LitElement {
         super();
 
         this.id = "";
-        this.completed = false;
-        this.title = "";
         this.time = "";
+        this.title = "";
+
+        this.completed = false;
 
         this.editTodo = () => {};
-        this.updateTodos = () => {};
         this.deleteTodo = () => {};
+        this.updateTodos = () => {};
     }
 
     updateComplete = (e) => {

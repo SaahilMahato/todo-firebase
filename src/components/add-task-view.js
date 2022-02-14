@@ -5,8 +5,9 @@ class AddTaskView extends LitElement {
 
     static get properties() {
         return {
-            title: { type: String },
             time: { type: String },
+            title: { type: String },
+
             updateTodos: { type: Function },
         }
     }
@@ -19,7 +20,7 @@ class AddTaskView extends LitElement {
             }
 
             .form-control {
-                width: 25%;
+                width: 40%;
             }
 
             label {
@@ -28,7 +29,7 @@ class AddTaskView extends LitElement {
                 font-size: 1.4em;
             }
             
-            input, select {
+            input {
                 width: 70%;
                 padding: 3% 0;
                 font-size: 1.4em;
@@ -48,8 +49,9 @@ class AddTaskView extends LitElement {
 
     constructor() {
         super();
-        this.title = "";
         this.time = "";
+        this.title = "";
+
         this.updateTodos = () => {};
     }
 
@@ -62,15 +64,15 @@ class AddTaskView extends LitElement {
     }
 
     resetForm = () => {
-        this.title = "";
         this.time = "";
+        this.title = "";
     }
 
     addTask = async () => {
         if(this.title && this.time) {
             const newTask = {
-                title: this.title,
                 time: this.time,
+                title: this.title,  
             }
     
             const status = await addTodoDB(newTask);

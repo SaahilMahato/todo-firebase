@@ -53,6 +53,7 @@ class AppView extends LitElement {
 
     constructor() {
         super();
+        
         this.todos = [];
     }
 
