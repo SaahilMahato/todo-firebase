@@ -9,6 +9,7 @@ import { LitElement, html, css } from 'lit';
 import './components/app-view';
 import './components/add-task-view';
 import './components/task-view';
+import './services/database';
 
 /**
  * An example element.

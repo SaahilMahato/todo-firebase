@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-
+import { addTodoDB } from '../services/database';
 
 class AddTaskView extends LitElement {
 
@@ -7,7 +7,7 @@ class AddTaskView extends LitElement {
         return {
             title: { type: String },
             time: { type: String },
-            updateTodos: { },
+            updateTodos: { type: Function },
         }
     }
 
@@ -50,28 +50,32 @@ class AddTaskView extends LitElement {
         super();
         this.title = "";
         this.time = "";
+        this.updateTodos = () => {};
     }
 
-    updateTitle(e) {
+    updateTitle = (e) => {
         this.title = e.target.value;
     }
 
-    updateTime(e) {
+    updateTime = (e) => {
         this.time = e.target.value;
     }
 
-    resetForm() {
+    resetForm = () => {
         this.title = "";
         this.time = "";
     }
 
-    addTask() {
+    addTask = async () => {
         if(this.title && this.time) {
             const newTask = {
                 title: this.title,
                 time: this.time,
             }
-            this.updateTodos(newTask);
+    
+            const status = await addTodoDB(newTask);
+            if (status)
+                this.updateTodos();
             this.resetForm();
         }
     }

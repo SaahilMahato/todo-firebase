@@ -1,5 +1,9 @@
 import { LitElement, html, css } from "lit";
-
+import { 
+    getTodosDB,
+    deleteTodoDB,
+    editTodoDB
+} from '../services/database';
 
 class AppView extends LitElement {
 
@@ -50,47 +54,26 @@ class AppView extends LitElement {
     constructor() {
         super();
         this.todos = [];
-        this.updateTodos = this.updateTodos.bind(this);
-        this.editTodo = this.editTodo.bind(this);
-        this.deleteTodo = this.deleteTodo.bind(this);
     }
 
-    clearAll() {
-        this.todos = [];
+    firstUpdated() {
+        this.updateTodos();
     }
 
-    updateTodos(newTask) {
-        const newTaskUpdated = {
-            ...newTask,
-            id: this.todos.length,
-            completed: false,
-        };
-        this.todos = [...this.todos, newTaskUpdated];
+    updateTodos = async () => {
+        this.todos =  await getTodosDB();
     }
 
-    editTodo(id, completed, title, time) {
-        const temp = [...this.todos];
-        
-        for(let i=0; i<temp.length; i++) {
-            if (temp[i].id === id) {
-                temp[i].completed = completed;
-                temp[i].title = title;
-                temp[i].time = time;
-                break;
-            }
-        }
-
-        this.todos = [...temp];
+    editTodo = async (id, completed, title, time) => {
+        const status = await editTodoDB(id, completed, title, time);
+        if (status)
+            this.updateTodos();
     }
 
-    deleteTodo(id) {
-        const temp = this.todos.filter(todo => todo.id !== id);
-
-        for (let i=0; i<temp.length; i++) {
-            temp[i].id = i;
-        }
-
-        this.todos = [...temp];
+    deleteTodo = async (id) => {
+        const status = await deleteTodoDB(id);
+        if (status)
+            this.updateTodos();
     }
 
     render() {
@@ -102,7 +85,6 @@ class AppView extends LitElement {
                 <add-task-view .updateTodos=${this.updateTodos}></add-task-view>
                 <div class="list-header">
                     <h3>Todos</h3>
-                    <button @click=${this.clearAll}>Clear All</button>
                 </div>
                 <div class="todo-list">
                     ${this.todos.map(todo => html`

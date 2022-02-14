@@ -23,6 +23,7 @@
   "author": "Google LLC",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "firebase": "9.4.1",
     "lit": "^2.0.0"
   },
   "devDependencies": {

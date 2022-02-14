@@ -9,9 +9,9 @@ class TaskView extends LitElement {
             completed: { type: Boolean },
             title: { type: String },
             time: { type: String },
-            editTodo: { Function },
-            updateTodos: { },
-            deleteTodo: { },
+            editTodo: { type: Function },
+            updateTodos: { type: Function },
+            deleteTodo: { type: Function },
         }
     }
 
@@ -43,19 +43,28 @@ class TaskView extends LitElement {
 
     constructor() {
         super();
+
+        this.id = "";
+        this.completed = false;
+        this.title = "";
+        this.time = "";
+
+        this.editTodo = () => {};
+        this.updateTodos = () => {};
+        this.deleteTodo = () => {};
     }
 
-    updateComplete(e) {
+    updateComplete = (e) => {
         this.completed = e.target.checked;
         this.editTodo(this.id, this.completed, this.title, this.time);
     }
 
-    updateTitle(e) {
+    updateTitle = (e) => {
         this.title = e.target.value;
         this.editTodo(this.id, this.completed, this.title, this.time);
     }
 
-    updateTime(e) {
+    updateTime = (e) => {
         this.time = e.target.value;
         this.editTodo(this.id, this.completed, this.title, this.time);
     }
